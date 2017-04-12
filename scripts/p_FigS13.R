@@ -14,7 +14,7 @@ for (pop in c("msm", "het")){
   for (pn in 198){
     source(paste("pn_", pn, ".R", sep=""))
     psi <- psi.het
-    load(paste("../data/FigS11/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
+    load(paste("../data/FigS13/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
     obscasesAverted <- as.data.frame(rbind(obscasesAverted, cbind(naat.obscasesAverted[2,5,]*100000, "POC+R", pop, eff.lambda_sigma, psi)))
   }
 }
@@ -22,7 +22,7 @@ for (pop in c("msm", "het")){
   for (pn in 200){
     source(paste("pn_", pn, ".R", sep=""))
     psi <- psi.het
-    load(paste("../data/FigS11/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
+    load(paste("../data/FigS13/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
     obscasesAverted <- as.data.frame(rbind(obscasesAverted, cbind(naat.obscasesAverted[2,5,]*100000, "POC-R", pop, eff.lambda_sigma, psi)))
   }
 }
@@ -30,7 +30,7 @@ for (pop in c("msm", "het")){
   for (pn in 199){
     source(paste("pn_", pn, ".R", sep=""))
     psi <- psi.het
-    load(paste("../data/FigS11/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
+    load(paste("../data/FigS13/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
     obscasesAverted <- as.data.frame(rbind(obscasesAverted, cbind(naat.obscasesAverted[1,5,]*100000, "culture", pop, eff.lambda_sigma, psi)))
   }
 }
@@ -128,7 +128,7 @@ for (pop in c("msm", "het")){
 
 
 print(plot_grid(pl[[1]], pl[[2]], labels=c("A", "B"), ncol = 2, nrow = 1))
-ggsave(paste("../figures/FigS11_tmp.pdf", sep=""), colormodel="cmyk", width=14, height=7)
+ggsave(paste("../figures/FigS13_tmp.pdf", sep=""), colormodel="cmyk", width=14, height=7)
 
 # i, isi, ipi, ili
 # pop, scenario, psi, lambda_a

@@ -16,7 +16,7 @@ theme_set(theme_bw())
 # 6 delta: pn 176-181
 # 7 omega: pn 182-187
 
-fig.no <- 2
+fig.no <- 4
 for (para in 1:7){
   fig.no <- fig.no + 1
   
@@ -29,7 +29,7 @@ for (para in 1:7){
     for (pop in c("msm", "het")){
       for (pn in c(129, 131:139)){
         source(paste("pn_", pn, ".R", sep=""))
-        load(paste("../data/FigS3-9/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
+        load(paste("../data/FigS5-11/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
         df <- as.data.frame(rbind(df, cbind(naat.obscasesAverted[2,5,]*100000, "POC+R", pop, xi_ng*100)))
         df <- as.data.frame(rbind(df, cbind(naat.obscasesAverted[1,5,]*100000, "culture", pop, xi_ng*100)))
       }
@@ -44,7 +44,7 @@ for (para in 1:7){
     for (pop in c("msm", "het")){
       for (pn in c(129, 140:148, 130)){
         source(paste("pn_", pn, ".R", sep=""))
-        load(paste("../data/FigS3-9/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
+        load(paste("../data/FigS5-11/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
         df <- as.data.frame(rbind(df, cbind(naat.obscasesAverted[2,5,]*100000, "POC", pop, eff.xi_r*100)))
         df <- as.data.frame(rbind(df, cbind(naat.obscasesAverted[1,5,]*100000, "culture", pop, eff.xi_r*100)))
       }
@@ -57,7 +57,7 @@ for (para in 1:7){
     for (pop in c("msm", "het")){
       for (pn in c(149, 129, 150:157)){
         source(paste("pn_", pn, ".R", sep=""))
-        load(paste("../data/FigS3-9/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
+        load(paste("../data/FigS5-11/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
         df <- as.data.frame(rbind(df, cbind(naat.obscasesAverted[2,5,]*100000, "POC+R", pop, eff.lambda_sigma*100)))
         df <- as.data.frame(rbind(df, cbind(naat.obscasesAverted[1,5,]*100000, "culture", pop, eff.lambda_sigma*100)))
       }
@@ -70,7 +70,7 @@ for (para in 1:7){
     for (pop in c("msm", "het")){
       for (pn in c(158, 129, 159:166)){
         source(paste("pn_", pn, ".R", sep=""))
-        load(paste("../data/FigS3-9/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
+        load(paste("../data/FigS5-11/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
         df <- as.data.frame(rbind(df, cbind(naat.obscasesAverted[2,5,]*100000, "POC+R", pop, lambda_zeta*100)))
         df <- as.data.frame(rbind(df, cbind(naat.obscasesAverted[1,5,]*100000, "culture", pop, lambda_zeta*100)))
       }
@@ -83,7 +83,7 @@ for (para in 1:7){
     for (pop in c("msm", "het")){
       for (pn in c(167:170, 129, 171:175)){
         source(paste("pn_", pn, ".R", sep=""))
-        load(paste("../data/FigS3-9/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
+        load(paste("../data/FigS5-11/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
         df <- as.data.frame(rbind(df, cbind(naat.obscasesAverted[2,5,]*100000, "POC+R", pop, psi.het*100)))
         df <- as.data.frame(rbind(df, cbind(naat.obscasesAverted[1,5,]*100000, "culture", pop, psi.het*100)))
       }
@@ -98,7 +98,7 @@ for (para in 1:7){
     for (pop in c("msm", "het")){
       for (pn in c(176:177, 129, 178:181)){
         source(paste("pn_", pn, ".R", sep=""))
-        load(paste("../data/FigS3-9/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
+        load(paste("../data/FigS5-11/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
         df <- as.data.frame(rbind(df, cbind(naat.obscasesAverted[2,5,]*100000, "POC+R", pop, round(365*eff.delta))))
         df <- as.data.frame(rbind(df, cbind(naat.obscasesAverted[1,5,]*100000, "culture", pop, round(365*eff.delta))))
       }
@@ -113,7 +113,7 @@ for (para in 1:7){
     for (pop in c("msm", "het")){
       for (pn in c(182:183, 129, 184:187)){
         source(paste("pn_", pn, ".R", sep=""))
-        load(paste("../data/FigS3-9/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
+        load(paste("../data/FigS5-11/12_naat-obscasesAverted_", pop, "_", pn,".data", sep=""))
         df <- as.data.frame(rbind(df, cbind(naat.obscasesAverted[2,5,]*100000, "POC+R", pop, round(365/omega))))
         df <- as.data.frame(rbind(df, cbind(naat.obscasesAverted[1,5,]*100000, "culture", pop, round(365/omega))))
       }

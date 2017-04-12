@@ -5,6 +5,7 @@ library(ggplot2)
 library(ggthemes)
 library(gridExtra)
 library(gtable)
+library(cowplot)
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
@@ -14,58 +15,57 @@ psivec <- c(0.3, 0.6, 0.9)
 lsvec <- c(0.3, 0.6, 0.9)
 xirvec <- c(0, 0.25, 0.5, 0.6, 0.7, 0.8, 0.9, 0.99)
 
-
+d <- 2
 df <- c()
-df9 <- c()
-df10 <- c()
-
-pn <- 197
-for(pop in c("msm", "het")){
-  
-  
-  if(pop=="msm"){
-    popname <- "MSM"
-  }else{
-    popname <- "HMW"
-  }
-  
-  load(paste("../data/Fig4+5+S4/fr_", pop, "_", pn, ".data", sep=""))
-  
-  for(d in 2){
+pn <- 201
+for(pn in c(201, 202)){
+  for(pop in c("msm", "het")){
     
     
-    
-    ed8 <- fr
-    ed8[ed8==Inf] <- NA
-    ed8[ed8==-Inf] <- NA
-    
-    a1 <- array(dim=dim(ed8[4,d,,,,]))
-    for(i in 1:8){
-      a1[,,i,] <- ed8[2,d,,,8,]
+    if(pop=="msm"){
+      popname <- "MSM"
+    }else{
+      popname <- "HMW"
     }
-    ned8 <- (ed8[4,d,,,,])/a1
-    med8 <- apply(ned8, c(1,2,3), function(x) median(x))
-    med8 <- melt(med8)
-    led8 <- cbind(med8, popname, "CULT")
-    names(led8) <- c( "psi", "lambda_sigma", "xi_r", "rrd", "pop", "test") # rrd = relative rate difference
     
-    
-    ed7 <- fr
-    ed7[ed7==Inf] <- NA
-    ed7[ed7==-Inf] <- NA
-    
-    a5 <- array(dim=dim(ed7[4,d,,,,]))
-    for(i in 1:8){
-      a5[,,i,] <- ed7[3,d,,,7,]
+    if(pn==202){  
+      load(paste("../data/FigS14/fr_", pop, "_", pn, ".data", sep=""))
+      
+      ed8 <- fr
+      ed8[ed8==Inf] <- NA
+      ed8[ed8==-Inf] <- NA
+      
+      a1 <- array(dim=dim(ed8[4,d,,,,]))
+      for(i in 1:8){
+        a1[,,i,] <- ed8[2,d,,,8,]
+      }
+      ned8 <- (ed8[4,d,,,,])/a1
+      med8 <- apply(ned8, c(1,2,3), function(x) median(x))
+      med8 <- melt(med8)
+      led8 <- cbind(med8, popname, "CULT")
+      names(led8) <- c( "psi", "lambda_sigma", "xi_r", "rrd", "pop", "test") # rrd = relative rate difference
+      
+      df <- rbind(df, led8)
+      
+    }else if(pn==201){
+      load(paste("../data/FigS14/fr_", pop, "_", pn, ".data", sep=""))
+      
+      ed7 <- fr
+      ed7[ed7==Inf] <- NA
+      ed7[ed7==-Inf] <- NA
+      
+      a5 <- array(dim=dim(ed7[4,d,,,,]))
+      for(i in 1:8){
+        a5[,,i,] <- ed7[3,d,,,7,]
+      }
+      ned7 <- (ed7[4,d,,,,])/a5
+      med7 <- apply(ned7, c(1,2,3), function(x) median(x))
+      med7 <- melt(med7)
+      led7 <- cbind(med7, popname, "NAAT")
+      names(led7) <- c( "psi", "lambda_sigma", "xi_r", "rrd", "pop", "test") # rrd = relative rate difference
+      
+      df <- rbind(df, led7)
     }
-    ned7 <- (ed7[4,d,,,,])/a5
-    med7 <- apply(ned7, c(1,2,3), function(x) median(x))
-    med7 <- melt(med7)
-    led7 <- cbind(med7, popname, "NAAT")
-    names(led7) <- c( "psi", "lambda_sigma", "xi_r", "rrd", "pop", "test") # rrd = relative rate difference
-    
-    
-    df <- rbind(df, led8, led7)
     
   }
 }
@@ -96,14 +96,16 @@ pcult <- ggplot(df[which(df$test=="CULT"),], aes(x=xi_r, y=rrd))+
                           labels=c(as.character(lsvec*100)))+
   scale_y_log10(breaks=c(1,10,100))+
   theme(strip.background = element_rect(fill = "white"))+
-  theme(legend.box="vertical", 
+  theme(legend.box="vertical")+
+  theme(
+    # text= element_text(size=18),
     panel.spacing = (unit(0.5, "cm")),
     panel.grid.major.y=element_line(colour="gray"),
     strip.background=element_rect(colour="white", fill="white"),
     axis.ticks=element_blank(),
     #         axis.text.x=element_blank(),
-    axis.title.y=element_text(margin=margin(0,10,0,0)),
-    axis.title.x=element_text(margin=margin(10,0,30,0)),
+    axis.title.y=element_text(margin=margin(10,10,0,0)),
+    axis.title.x=element_text(margin=margin(10,0,10,0)),
     axis.text=element_text(colour="black")
   )
 
@@ -115,33 +117,32 @@ pnaat <- ggplot(df[which(df$test=="NAAT"),], aes(x=xi_r, y=rrd))+
   xlab(expression("POC test sensitivity to detect resistance ("*xi["R, POC"]*" in %)"))+
   ylab("ratio of resistance spread between POC and NAAT")+
   scale_colour_manual(values=cbPalette[c(1,3,8)], name  =expression("fraction of successfully treated individuals who were symptomatic at baseline ("*psi*" in %)"),
-                          labels=c(as.character(psivec*100)))+
-  scale_shape_discrete(name  =expression("fraction of successfully treated individuals who were symptomatic at baseline ("*psi*" in %)"),
                       labels=c(as.character(psivec*100)))+
+  scale_shape_discrete(name  =expression("fraction of successfully treated individuals who were symptomatic at baseline ("*psi*" in %)"),
+                       labels=c(as.character(psivec*100)))+
   scale_linetype_discrete(name  =expression("fraction of asymptomatic individuals who return for treatment at baseline ("*lambda["A, baseline"]*" in %)"),
                           labels=c(as.character(lsvec*100)))+
   theme(strip.background = element_rect(fill = "white"))+
-  theme(legend.box="vertical",
+  theme(legend.box="vertical")+
+  theme(
+    # text= element_text(size=18),
     panel.spacing = (unit(0.5, "cm")),
     panel.grid.major.y=element_line(colour="gray"),
     strip.background=element_rect(colour="white", fill="white"),
     axis.ticks=element_blank(),
-    axis.title.y=element_text(margin=margin(0,10,0,0)),
-    axis.title.x=element_text(margin=margin(10,0,30,0)),
+    #         axis.text.x=element_blank(),
+    axis.title.y=element_text(margin=margin(10,10,0,0)),
+    axis.title.x=element_text(margin=margin(10,0,10,0)),
     axis.text=element_text(colour="black")
   )
 
 
-pdf("../figures/Fig4_tmp.pdf", colormodel="cmyk", width=15, height=8)
-  pcult + facet_wrap(~ pop)+
+pcult2 <- pcult + facet_wrap(~ pop)+
   theme(panel.spacing = unit(2, "cm"))+
   theme(text=element_text(size=18))
-dev.off()
-
-
-
-pdf("../figures/Fig5_tmp.pdf", colormodel="cmyk", width=15, height=8)
-pnaat + facet_wrap(~ pop)+
+pnaat2 <- pnaat + facet_wrap(~ pop)+
   theme(panel.spacing = unit(2, "cm"))+
   theme(text=element_text(size=18))
-dev.off()
+
+print(plot_grid(pcult2, pnaat2, labels=c("A", "B"), ncol = 1, nrow = 2))
+ggsave("../figures/FigS14_tmp.pdf", colormodel="cmyk", width=16, height=16)

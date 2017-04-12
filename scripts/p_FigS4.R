@@ -25,7 +25,7 @@ for(pop in c("msm", "het")){
   }else{
     popname <- "HMW"
   }
-  load(paste("../data/Fig4+5+S2/fr_", pop, "_", pn, ".data", sep=""))
+  load(paste("../data/Fig4+5+S4/fr_", pop, "_", pn, ".data", sep=""))
   
   erad <- array(dim=c(length(psivec), length(lsvec), length(xirvec)))
   for (m in 3){
@@ -81,7 +81,7 @@ perad <- ggplot(df, aes(x=xi_r, y=erad))+
     axis.text=element_text(colour="black")
   )
 
-pdf("../figures/FigS2_tmp.pdf",colormodel="cmyk", width=15, height=8)
+pdf("../figures/FigS4_tmp.pdf",colormodel="cmyk", width=15, height=8)
 perad + facet_wrap(~ pop)+
   theme(panel.spacing = unit(2, "cm"))+
   theme(axis.title.y=element_text(vjust=1))+
