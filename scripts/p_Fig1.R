@@ -1,6 +1,6 @@
 # Generating model flow chart
 
-setwd("~/PhD/ng_poc/repository/scripts/")
+setwd("~/PhD/ng_poc/repository/NG-POC-resistance/scripts/")
 
 library(diagram)
 

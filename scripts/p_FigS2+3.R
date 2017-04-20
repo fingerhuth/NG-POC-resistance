@@ -97,7 +97,7 @@ for (popno in c(1,2)){ # population loop
   
   g <- rbind(gprev, ginc)
   
-  pdf(paste("../figures/FigS",figno,"_tmp.pdf", sep=""), width=6.69, height=6.69*0.7, colormodel="cmyk")
+  pdf(paste("../figures/FigS",figno,"_tmp.pdf", sep=""), width=lwi, height=lwi*0.5, colormodel="cmyk")
   grid.newpage()
   grid.draw(g)
   dev.off()

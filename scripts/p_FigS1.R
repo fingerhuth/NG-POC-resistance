@@ -1,3 +1,4 @@
+setwd("~/PhD/ng_poc/repository/NG-POC-resistance/scripts/")
 library(diagram)
 
 pdf("../figures/FigS1_tmp.pdf", width=7, height=7)

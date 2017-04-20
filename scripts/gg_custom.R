@@ -28,3 +28,5 @@ custom <-
     plot.background = element_rect(colour="white", fill="white"),
     strip.background=element_rect(colour="white", fill="white")
   )
+
+lwi <- 6.69

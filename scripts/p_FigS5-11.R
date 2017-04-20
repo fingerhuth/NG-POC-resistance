@@ -1,3 +1,5 @@
+setwd("~/PhD/ng_poc/repository/NG-POC-resistance/scripts/")
+
 # load libraries
 library(ggplot2)
 library(ggthemes)
