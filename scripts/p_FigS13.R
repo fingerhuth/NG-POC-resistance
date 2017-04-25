@@ -45,11 +45,11 @@ obscasesAverted$outcome <- as.numeric(as.character(obscasesAverted$outcome))
 
 pl <- list()
 ywhiskers <- rbind(c(Inf, -Inf),c(Inf, -Inf))
-outcome.stats <- array(dim=c(2,3,3,3,5))
-outcome.stats2 <- array(dim=c(2,3,3,3,3))
-outcome.median <- array(dim=c(2,3,3,3))
-outcome.median2 <- array(dim=c(2,3,3,3))
-outcome.mean <- array(dim=c(2,3,3,3))
+outcome.stats <- array(dim=c(2,3,1,1,5))
+outcome.stats2 <- array(dim=c(2,3,1,1,3))
+outcome.median <- array(dim=c(2,3,1,1))
+outcome.median2 <- array(dim=c(2,3,1,1))
+outcome.mean <- array(dim=c(2,3,1,1))
 
 for (pop in c("msm", "het")){
   if(pop=="msm"){
@@ -134,23 +134,23 @@ ggsave(paste("../figures/FigS13_tmp.pdf", sep=""), colormodel="cmyk", width=14, 
 # pop, scenario, psi, lambda_a
 # msm/het (1/2), POC+R/POC-R/culture, 30%/60%/90%, 30%/60%/90%,
 # baseline: [,,2,3]
-round(outcome.median[1,1,2,3]) # msm POC+R
-round(outcome.median[1,2,2,3]) # msm POC-R
-round(outcome.median[1,3,2,3]) # msm culture
+round(outcome.median[1,1,,]) # msm POC+R
+round(outcome.median[1,2,,]) # msm POC-R
+round(outcome.median[1,3,,]) # msm culture
 
-round(outcome.median[2,1,2,3]) # het POC+R
-round(outcome.median[2,2,2,3]) # het POC-R
-round(outcome.median[2,3,2,3]) # het culture
+round(outcome.median[2,1,,]) # het POC+R
+round(outcome.median[2,2,,]) # het POC-R
+round(outcome.median[2,3,,]) # het culture
 
 
 # i, isi, ipi, ili
 # pop, scenario, psi, lambda_a
 # msm/het (1/2), POC+R/POC-R/culture, 30%/60%/90%, 30%/60%/90%,
 # baseline: [,,2,3]
-round(outcome.stats2[1,1,2,3,]) # msm POC+R
-round(outcome.stats2[1,2,2,3,]) # msm POC-R
-round(outcome.stats2[1,3,2,3,]) # msm culture
+round(outcome.stats2[1,1,,,]) # msm POC+R
+round(outcome.stats2[1,2,,,]) # msm POC-R
+round(outcome.stats2[1,3,,,]) # msm culture
 
-round(outcome.stats2[2,1,2,3,]) # het POC+R
-round(outcome.stats2[2,2,2,3,]) # het POC-R
-round(outcome.stats2[2,3,2,3,]) # het culture
+round(outcome.stats2[2,1,,,]) # het POC+R
+round(outcome.stats2[2,2,,,]) # het POC-R
+round(outcome.stats2[2,3,,,]) # het culture

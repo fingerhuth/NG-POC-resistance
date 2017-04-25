@@ -23,6 +23,7 @@ for (para in 1:7){
   fig.no <- fig.no + 1
   
   outcome.mean <- array(dim=c(2,2,10))
+  outcome.median <- array(dim=c(2,2,10))
   # load correct data for parameter (necessary because each value of parameter has own pn)
   if(para==1){
     xlab <- expression("test sensitivity to detect gonorrhoea ("*xi[G]*" in %)")
@@ -39,6 +40,7 @@ for (para in 1:7){
     
   }else if(para==2){
     outcome.mean <- array(dim=c(2,2,11))
+    outcome.median <- array(dim=c(2,2,11))
     
     xlab <- expression("test sensitivity to detect resistance against the first-line antibiotic ("*xi["R, POC"]*" or "*xi["R, culture"]*" in %)")
     
@@ -93,6 +95,7 @@ for (para in 1:7){
     
   }else if(para==6){
     outcome.mean <- array(dim=c(2,2,7))
+    outcome.median <- array(dim=c(2,2,7))
     
     xlab <- expression("average time after test individuals return for treatment at baseline ("*delta["baseline"]*" in days)")
     
@@ -108,6 +111,7 @@ for (para in 1:7){
     
   }else if(para==7){
     outcome.mean <- array(dim=c(2,2,7))
+    outcome.median <- array(dim=c(2,2,7))
     
     xlab <- expression("average time individuals with resistant gonorrhoea wait for re-treatment ("*1/omega*" in days)")
     
@@ -188,6 +192,7 @@ for (para in 1:7){
         j <- which(df[isel,]$value==ir)
         
         outcome.mean[i, isi, ipi] <- mean(df[isel,][j,]$outcome)
+        outcome.median[i, isi, ipi] <- median(df[isel,][j,]$outcome)
         ipi <- ipi+1
         
         whisk.temp <- boxplot.stats(df[isel,][j,]$outcome)$stats[c(1, 5)]
@@ -195,8 +200,12 @@ for (para in 1:7){
         if(whisk.temp[2]>ywhiskers[i,2]) ywhiskers[i,2] <- whisk.temp[2]
       }
     }
+    # outcome.median: [pop (msm/het), scenario (POC+R/culture), value (depends on parameter)]
+    print(paste(pop, para, "POC+R", levels(df[ind,]$value), outcome.median[i,1,]))
+    print(paste(pop, para, "culture", levels(df[ind,]$value), outcome.median[i,2,]))
     
-    print(paste(pop, para ,all(outcome.mean[i,1,]>outcome.mean[i,2,])))
+    # does POC+R lead to more observed cases averted than culture?
+    print(all(outcome.median[i,1,]>outcome.median[i,2,]))
     
     yvec <- c()
     if(ywhiskers[i,1]>0){
@@ -220,3 +229,6 @@ for (para in 1:7){
   ggsave(paste("../figures/FigS", fig.no, "_tmp.pdf", sep=""), colormodel="cmyk", width=10, height=10)
   
 }
+
+
+
