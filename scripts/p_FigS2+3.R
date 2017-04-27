@@ -74,7 +74,7 @@ for (popno in c(1,2)){ # population loop
     theme(strip.background=element_rect(size=0, fill="white"),
           plot.margin=margin(12,3,1,1,"pt"))
   pp2 <- pp + facet_wrap( ~ group, ncol=3, scales="free")
-  # pp3 <- pp2 + geom_point(data=pointprev, aes(x=value, y=yval), col="goldenrod1")
+  pp3 <- pp2 + geom_point(data=pointprev, aes(x=value, y=yval), col="goldenrod1")
   
   # manipulate incidence records
   dfn2i <- dfn[,12:14] %>%
@@ -94,7 +94,7 @@ for (popno in c(1,2)){ # population loop
   pi2
   
   # arrange prevalence and incidence plots on one common plot
-  gprev <- ggplotGrob(pp2)
+  gprev <- ggplotGrob(pp3)
   ginc <- ggplotGrob(pi2)
   
   g <- rbind(gprev, ginc)
