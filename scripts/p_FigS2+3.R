@@ -35,9 +35,8 @@ for (popno in c(1,2)){ # population loop
   
   odf <- outros[1:max.outros,]
   
-  
+  # get median and IQR for prevalence and incidence
   # prevL, prevH, prevT, incL, incH, incT, theta
-  
   prevM <- apply(odf[,1:3], 2, median)
   prev50low <- apply(odf[,1:3], 2, function(x) quantile(x, 0.25))
   prev50up <- apply(odf[,1:3], 2, function(x) quantile(x, 0.75))
@@ -51,9 +50,10 @@ for (popno in c(1,2)){ # population loop
   
   df <- rbind(df2a, df2b)
   
+  # print latex table with median and IQR
   print(xtable(df))
   
-  
+  # Generate figures S2/S3 that show prevalence and incidence in resistance-free equilibrium
   dfn <- as.data.frame(cbind(odf, odf[,4]*odf[,11], odf[,5]*odf[,11], odf[,6]*odf[,11]))
   colnames(dfn) <- c("prevL", "prevH", "prevT", "incL", "incH", "incT", "epsilon", "betaL", "betaH", "D", "f", "visIncL", "visIncH", "visIncT")
   
@@ -103,5 +103,3 @@ for (popno in c(1,2)){ # population loop
   dev.off()
   
 }
-
-
