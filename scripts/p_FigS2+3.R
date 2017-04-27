@@ -22,12 +22,14 @@ for (popno in c(1,2)){ # population loop
     groupcol <- "dodgerblue3"
     figno <- 2
     popname <- "MSM"
+    pointprev <- data.frame(group=paste("total ", popname, " population", sep=""), value=1.87, yval=1)
   }else{
     seed <- 993734
     pop <- "het" 
     groupcol <- "darkolivegreen3"
     figno <- 3
     popname <- "HMW"
+    pointprev <- data.frame(group=paste("total ", popname, " population", sep=""), value=0.24, yval=6.5)
   }
   
   load(paste("../data/outros_", pop, "-", seed, "-", pop, ".data", sep=""))
@@ -65,14 +67,14 @@ for (popno in c(1,2)){ # population loop
   levels(dfn2p$group) <- c(paste("low activity class ", popname, sep=""), paste("high activity class ", popname, sep=""), paste("total ", popname, " population", sep=""))
   
   # plot prevalence
-  pp <- ggplot(dfn2p)+
-    geom_histogram(aes(x=value*100, y=..density..), fill=groupcol, size=0.2, colour=groupcol, alpha=0.5, boundary=0, bins=31)+
+  pp <- ggplot(dfn2p, aes(x=value*100, y=..density..))+
+    geom_histogram(fill=groupcol, size=0.2, colour=groupcol, alpha=0.5, boundary=0, bins=31)+
     xlab("prevalence (in %)")+
     custom+
     theme(strip.background=element_rect(size=0, fill="white"),
           plot.margin=margin(12,3,1,1,"pt"))
   pp2 <- pp + facet_wrap( ~ group, ncol=3, scales="free")
-  pp2
+  pp3 <- pp2 + geom_point(data=pointprev, aes(x=value, y=yval), col="goldenrod1")
   
   # manipulate incidence records
   dfn2i <- dfn[,12:14] %>%
@@ -92,7 +94,7 @@ for (popno in c(1,2)){ # population loop
   pi2
   
   # arrange prevalence and incidence plots on one common plot
-  gprev <- ggplotGrob(pp2)
+  gprev <- ggplotGrob(pp3)
   ginc <- ggplotGrob(pi2)
   
   g <- rbind(gprev, ginc)
